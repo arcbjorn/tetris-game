@@ -1,0 +1,14 @@
+bin/
+obj/
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.sln.cache
+*.csproj.user
+.vs/
+.vscode/
+*.swp
+*~
+.DS_Store
