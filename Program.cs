@@ -56,8 +56,19 @@ namespace TetrisGame
                 new int[][] { new int[] {1,1,0}, new int[] {0,1,1} }  // Z
             };
 
-            var shape = shapes[_random.Next(shapes.Length)];
-            _currentPiece = new Tetromino(shape, Width / 2 - 2, 0);
+            var colors = new ConsoleColor[]
+            {
+                ConsoleColor.Cyan,    // I
+                ConsoleColor.Yellow,  // O
+                ConsoleColor.Magenta, // T
+                ConsoleColor.DarkYellow, // L
+                ConsoleColor.Blue,    // J
+                ConsoleColor.Green,   // S
+                ConsoleColor.Red      // Z
+            };
+
+            int index = _random.Next(shapes.Length);
+            _currentPiece = new Tetromino(shapes[index], Width / 2 - 2, 0, colors[index]);
 
             if (CheckCollision(_currentPiece.X, _currentPiece.Y, _currentPiece.Shape))
             {
@@ -209,7 +220,7 @@ namespace TetrisGame
                         int boardY = _currentPiece.Y + i;
                         if (boardY >= 0 && boardY < Height && boardX >= 0 && boardX < Width)
                         {
-                            _board[boardY, boardX] = 1;
+                            _board[boardY, boardX] = (int)_currentPiece.Color + 1;
                         }
                     }
                 }
@@ -265,7 +276,7 @@ namespace TetrisGame
 
         private static void DrawPieceInternal(char c)
         {
-            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.ForegroundColor = _currentPiece.Color;
             for (int i = 0; i < _currentPiece.Shape.Length; i++)
             {
                 for (int j = 0; j < _currentPiece.Shape[i].Length; j++)
@@ -287,13 +298,20 @@ namespace TetrisGame
 
         private static void DrawBoard()
         {
-            Console.ForegroundColor = ConsoleColor.White;
             for (int y = 0; y < Height; y++)
             {
                 for (int x = 0; x < Width; x++)
                 {
                     Console.SetCursorPosition(x + 1, y + 1);
-                    Console.Write(_board[y, x] == 1 ? "█" : " ");
+                    if (_board[y, x] > 0)
+                    {
+                        Console.ForegroundColor = (ConsoleColor)(_board[y, x] - 1);
+                        Console.Write("█");
+                    }
+                    else
+                    {
+                        Console.Write(" ");
+                    }
                 }
             }
             DrawScore();
@@ -384,12 +402,14 @@ namespace TetrisGame
             public int[][] Shape { get; set; }
             public int X { get; set; }
             public int Y { get; set; }
+            public ConsoleColor Color { get; set; }
 
-            public Tetromino(int[][] shape, int x, int y)
+            public Tetromino(int[][] shape, int x, int y, ConsoleColor color)
             {
                 Shape = shape;
                 X = x;
                 Y = y;
+                Color = color;
             }
         }
     }
