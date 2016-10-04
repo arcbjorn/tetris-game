@@ -200,7 +200,7 @@ namespace TetrisGame
                         if (boardX < 0 || boardX >= Width || boardY >= Height)
                             return true;
 
-                        if (boardY >= 0 && _board[boardY, boardX] == 1)
+                        if (boardY >= 0 && _board[boardY, boardX] > 0)
                             return true;
                     }
                 }
