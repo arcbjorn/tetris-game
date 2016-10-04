@@ -369,14 +369,14 @@ namespace TetrisGame
 
         private static void ShowGameOver(string[] args)
         {
-            Console.SetCursorPosition(Width / 2 - 3, Height / 2);
+            Console.SetCursorPosition(2, Height / 2);
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("GAME OVER!");
-            Console.SetCursorPosition(Width / 2 - 5, Height / 2 + 1);
+            Console.SetCursorPosition(2, Height / 2 + 1);
             Console.WriteLine($"Score: {_score}");
-            Console.SetCursorPosition(Width / 2 - 10, Height / 2 + 3);
+            Console.SetCursorPosition(2, Height / 2 + 3);
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("Press R to Restart or ESC to Quit");
+            Console.WriteLine("Press R or ESC");
             Console.ResetColor();
 
             while (true)
